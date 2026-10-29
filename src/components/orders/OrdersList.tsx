@@ -9,12 +9,12 @@ import { cardCls, primaryBtn, secondaryBtn } from "@/components/ui";
 import type { OrderRow, OrderStatus } from "@/types/domain";
 
 const STATUS_STYLE: Record<OrderStatus, string> = {
-  pending: "bg-amber-100 text-amber-900",
-  confirmed: "bg-blue-100 text-blue-900",
-  ready: "bg-green-100 text-green-900",
-  completed: "bg-stone-200 text-stone-800",
-  cancelled: "bg-red-100 text-red-900",
-  expired: "bg-stone-200 text-stone-600",
+  pending: "bg-amber-100 text-amber-800",
+  confirmed: "bg-green-100 text-green-800",
+  ready: "bg-green-700 text-stone-50",
+  completed: "bg-stone-200 text-stone-700",
+  cancelled: "bg-clay-100 text-clay-700",
+  expired: "bg-stone-100 text-stone-500",
 };
 
 /** Siguiente paso que puede dar el agricultor */
@@ -26,9 +26,12 @@ const NEXT_STEP: Partial<Record<OrderStatus, "confirmed" | "ready" | "completed"
 
 export function OrdersList({ orders, viewAs }: { orders: OrderRow[]; viewAs: "farmer" | "buyer" }) {
   const { dict } = useI18n();
-  if (orders.length === 0) return <p className="text-sm text-stone-600">{dict.orders.empty}</p>;
+  if (orders.length === 0)
+    return (
+      <p className="rounded-2xl border border-dashed border-stone-300 bg-white/60 px-5 py-8 text-center text-sm text-stone-600">{dict.orders.empty}</p>
+    );
   return (
-    <ul className="space-y-3">
+    <ul className="grid gap-4 md:grid-cols-2">
       {orders.map((o) => (
         <li key={o.id}>
           <OrderCard order={o} viewAs={viewAs} />
@@ -60,13 +63,13 @@ function OrderCard({ order, viewAs }: { order: OrderRow; viewAs: "farmer" | "buy
   }
 
   return (
-    <article className={`${cardCls} space-y-2`}>
+    <article className={`${cardCls} h-full space-y-3`}>
       <div className="flex flex-wrap items-center gap-2">
-        <span className={`rounded px-2 py-0.5 text-xs font-medium ${STATUS_STYLE[order.status]}`}>
+        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_STYLE[order.status]}`}>
           {o.status[order.status]}
         </span>
         <span className="text-xs text-stone-500">{t(o.createdAt, { date: formatDateTime(order.created_at, locale) })}</span>
-        <span className="ml-auto font-semibold">{o.total}: {formatPrice(Number(order.total), locale)}</span>
+        <span className="font-display tabular ml-auto text-lg font-semibold text-clay-600">{formatPrice(Number(order.total), locale)}</span>
       </div>
 
       {counterpart && (
@@ -76,7 +79,7 @@ function OrderCard({ order, viewAs }: { order: OrderRow; viewAs: "farmer" | "buy
           {counterpart.phone && (
             <>
               {" · "}
-              <a className="text-green-800 underline" href={`https://wa.me/${counterpart.phone.replace(/\D/g, "")}`}>
+              <a className="font-semibold text-green-800 underline" href={`https://wa.me/${counterpart.phone.replace(/\D/g, "")}`}>
                 {counterpart.phone}
               </a>
             </>
@@ -84,9 +87,9 @@ function OrderCard({ order, viewAs }: { order: OrderRow; viewAs: "farmer" | "buy
         </p>
       )}
 
-      <ul className="text-sm text-stone-700">
+      <ul className="tabular divide-y divide-stone-100 rounded-xl bg-stone-50 px-3 text-sm text-stone-700">
         {order.order_items.map((it, i) => (
-          <li key={i}>
+          <li key={i} className="py-1.5">
             {formatNumber(Number(it.quantity), locale)} {it.listings ? dict.common.units[it.listings.unit] : ""} ·{" "}
             {it.listings?.title} — {formatPrice(Number(it.subtotal), locale)}
           </li>
@@ -94,7 +97,7 @@ function OrderCard({ order, viewAs }: { order: OrderRow; viewAs: "farmer" | "buy
       </ul>
 
       {order.status === "pending" && order.reserved_until && (
-        <p className="text-xs text-amber-800">{t(o.confirmBefore, { date: formatDateTime(order.reserved_until, locale) })}</p>
+        <p className="rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800">{t(o.confirmBefore, { date: formatDateTime(order.reserved_until, locale) })}</p>
       )}
 
       {open && (
@@ -109,7 +112,7 @@ function OrderCard({ order, viewAs }: { order: OrderRow; viewAs: "farmer" | "buy
           </button>
         </div>
       )}
-      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+      {error && <p role="alert" className="text-sm text-clay-700">{error}</p>}
     </article>
   );
 }

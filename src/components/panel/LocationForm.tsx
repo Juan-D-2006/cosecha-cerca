@@ -77,7 +77,7 @@ export function LocationForm() {
         <button disabled={pending} className={`${primaryBtn} ml-auto`}>{p.addLocation}</button>
       </div>
       {message && (
-        <p role="status" className={`text-sm sm:col-span-2 ${message.ok ? "text-green-700" : "text-red-700"}`}>
+        <p role="status" className={`text-sm sm:col-span-2 ${message.ok ? "text-green-700" : "text-clay-700"}`}>
           {message.text}
         </p>
       )}

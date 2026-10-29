@@ -18,6 +18,8 @@ const es = {
     } as Record<string, string>,
     hoursLeft: "Vence en {n} h",
     daysLeft: "Vence en {n} días",
+    footerNote: "De la chacra a tu mesa, sin intermediarios ni desperdicio.",
+    photoCredit: "Fotos:",
   },
   catalog: {
     title: "Cosechas cerca de ti",
@@ -40,6 +42,11 @@ const es = {
     reserve: "Reservar",
     reserving: "Reservando…",
     reserved: "¡Reservado! El agricultor tiene 24 h para confirmar.",
+    results: "{n} cosechas cerca",
+    sortedBy: "Las más cercanas primero",
+    widenRadius: "Buscar hasta 100 km",
+    decrease: "Quitar uno",
+    increase: "Agregar uno",
   },
   auth: {
     loginTitle: "Ingresa a tu cuenta",
@@ -70,6 +77,8 @@ const es = {
   },
   panel: {
     title: "Panel del agricultor",
+    greeting: "Hola, {name}",
+    subtitle: "Publica tu cosecha, responde pedidos y que nada se pierda en la chacra.",
     locationsTitle: "Mis puntos de recojo",
     noLocations: "Agrega al menos un punto de recojo para poder publicar.",
     label: "Nombre del lugar",
@@ -110,6 +119,7 @@ const es = {
   },
   orders: {
     title: "Mis pedidos",
+    subtitle: "Sigue tus reservas y coordina el recojo con cada agricultor.",
     empty: "Todavía no hay pedidos.",
     goCatalog: "Ir al catálogo",
     status: {

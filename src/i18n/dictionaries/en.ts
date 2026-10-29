@@ -20,6 +20,8 @@ const en: Dictionary = {
     },
     hoursLeft: "Expires in {n} h",
     daysLeft: "Expires in {n} days",
+    footerNote: "From the farm to your table, no middlemen and no waste.",
+    photoCredit: "Photos:",
   },
   catalog: {
     title: "Harvests near you",
@@ -42,6 +44,11 @@ const en: Dictionary = {
     reserve: "Reserve",
     reserving: "Reserving…",
     reserved: "Reserved! The farmer has 24 h to confirm.",
+    results: "{n} harvests nearby",
+    sortedBy: "Closest first",
+    widenRadius: "Search up to 100 km",
+    decrease: "Remove one",
+    increase: "Add one",
   },
   auth: {
     loginTitle: "Log in to your account",
@@ -72,6 +79,8 @@ const en: Dictionary = {
   },
   panel: {
     title: "Farmer dashboard",
+    greeting: "Hello, {name}",
+    subtitle: "Publish your harvest, answer orders and let nothing go to waste.",
     locationsTitle: "My pickup points",
     noLocations: "Add at least one pickup point before publishing.",
     label: "Place name",
@@ -112,6 +121,7 @@ const en: Dictionary = {
   },
   orders: {
     title: "My orders",
+    subtitle: "Track your reservations and arrange pickup with each farmer.",
     empty: "No orders yet.",
     goCatalog: "Go to catalog",
     status: {

@@ -1,21 +1,26 @@
 import { HERO_IMAGE } from "@/lib/images";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { BrandMark } from "@/components/brand/BrandMark";
+import { TextileBand } from "@/components/brand/TextileBand";
 
-/** Pantalla dividida: foto de mercado + formulario */
+/** Pantalla dividida: foto de mercado con el mensaje de la marca + formulario */
 export function AuthShell({ dict, children }: { dict: Dictionary; children: React.ReactNode }) {
   return (
-    <div className="grid overflow-hidden rounded-xl border border-stone-200 bg-white md:grid-cols-2">
-      <div className="relative min-h-48 md:min-h-[560px]">
+    <div className="grid overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-[var(--shadow-lift)] md:grid-cols-[1.1fr_1fr]">
+      <div className="relative isolate flex min-h-64 flex-col justify-end md:min-h-[620px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={HERO_IMAGE} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-green-950/80 via-green-950/30 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-          <p className="text-2xl font-semibold">{dict.common.appName}</p>
-          <p className="mt-1 max-w-sm text-sm text-white/90">{dict.common.tagline}</p>
-          <p className="mt-3 text-xs text-white/70">{dict.auth.heroNote}</p>
+        <img src={HERO_IMAGE} alt="" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-green-950/95 via-green-950/50 to-green-950/10" />
+        <div className="p-6 sm:p-10">
+          <BrandMark className="h-12 w-12 shadow-lg" />
+          <p className="font-display mt-5 max-w-md text-3xl font-semibold leading-[1.1] text-stone-50 sm:text-4xl">
+            {dict.common.tagline}
+          </p>
+          <p className="mt-3 max-w-sm text-sm text-green-100">{dict.auth.heroNote}</p>
         </div>
+        <TextileBand className="h-3" />
       </div>
-      <div className="flex items-center justify-center p-6 sm:p-10">{children}</div>
+      <div className="flex items-center justify-center bg-stone-50/60 p-6 sm:p-10">{children}</div>
     </div>
   );
 }

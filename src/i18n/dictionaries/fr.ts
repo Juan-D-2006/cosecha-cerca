@@ -20,6 +20,8 @@ const fr: Dictionary = {
     },
     hoursLeft: "Expire dans {n} h",
     daysLeft: "Expire dans {n} jours",
+    footerNote: "De la ferme à votre table, sans intermédiaires ni gaspillage.",
+    photoCredit: "Photos :",
   },
   catalog: {
     title: "Récoltes près de chez vous",
@@ -42,6 +44,11 @@ const fr: Dictionary = {
     reserve: "Réserver",
     reserving: "Réservation…",
     reserved: "Réservé ! Le producteur a 24 h pour confirmer.",
+    results: "{n} récoltes à proximité",
+    sortedBy: "Les plus proches d'abord",
+    widenRadius: "Chercher jusqu'à 100 km",
+    decrease: "Retirer un",
+    increase: "Ajouter un",
   },
   auth: {
     loginTitle: "Connectez-vous à votre compte",
@@ -72,6 +79,8 @@ const fr: Dictionary = {
   },
   panel: {
     title: "Tableau de bord producteur",
+    greeting: "Bonjour, {name}",
+    subtitle: "Publiez votre récolte, répondez aux commandes et que rien ne se perde.",
     locationsTitle: "Mes points de retrait",
     noLocations: "Ajoutez au moins un point de retrait avant de publier.",
     label: "Nom du lieu",
@@ -112,6 +121,7 @@ const fr: Dictionary = {
   },
   orders: {
     title: "Mes commandes",
+    subtitle: "Suivez vos réservations et organisez le retrait avec chaque producteur.",
     empty: "Aucune commande pour l'instant.",
     goCatalog: "Voir le catalogue",
     status: {

@@ -36,7 +36,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4">
-      <h1 className="text-xl font-semibold">{a.loginTitle}</h1>
+      <h1 className="text-3xl font-semibold text-stone-900">{a.loginTitle}</h1>
       <label className={labelCls}>
         {a.email}
         <input name="email" type="email" required autoComplete="email" className={inputCls} />
@@ -45,10 +45,10 @@ export function LoginForm() {
         {a.password}
         <input name="password" type="password" required autoComplete="current-password" className={inputCls} />
       </label>
-      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+      {error && <p role="alert" className="rounded-xl bg-clay-50 px-3 py-2 text-sm text-clay-700">{error}</p>}
       <button disabled={pending} className={`${primaryBtn} w-full`}>{a.submitLogin}</button>
       <p className="text-center text-sm text-stone-600">
-        {a.noAccount} <Link href="/registro" className="text-green-800 underline">{dict.common.register}</Link>
+        {a.noAccount} <Link href="/registro" className="font-semibold text-clay-600 underline">{dict.common.register}</Link>
       </p>
     </form>
   );

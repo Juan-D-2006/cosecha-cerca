@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Camera } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/i18n/client";
 import { apiFetch, errorText } from "@/lib/api";
@@ -103,13 +104,13 @@ export function ListingForm({ locations, categories }: Props) {
     <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       <div className="sm:col-span-2 lg:col-span-3">
         <span className={labelCls}>{p.photo}</span>
-        <label className="mt-1 flex cursor-pointer items-center gap-4 rounded-lg border-2 border-dashed border-stone-300 p-3 hover:border-green-700">
+        <label className="mt-1.5 flex cursor-pointer items-center gap-4 rounded-2xl border-2 border-dashed border-stone-300 bg-stone-50 p-3 transition-colors duration-150 hover:border-clay-400 hover:bg-clay-50/50 has-[:focus-visible]:border-clay-500">
           {preview ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={preview} alt="" className="h-24 w-32 rounded-md object-cover" />
+            <img src={preview} alt="" className="h-24 w-32 rounded-xl object-cover shadow-md" />
           ) : (
-            <span className="flex h-24 w-32 items-center justify-center rounded-md bg-green-50 text-3xl text-green-800" aria-hidden>
-              +
+            <span className="grid h-24 w-32 place-items-center rounded-xl bg-amber-50 text-amber-700" aria-hidden>
+              <Camera className="h-8 w-8" strokeWidth={1.75} />
             </span>
           )}
           <span className="text-sm">
@@ -183,7 +184,7 @@ export function ListingForm({ locations, categories }: Props) {
       <div className="flex flex-wrap items-center gap-3 sm:col-span-2 lg:col-span-3">
         <button disabled={pending} className={primaryBtn}>{uploading ? p.uploadingPhoto : pending ? dict.common.saving : p.publish}</button>
         {message && (
-          <p role="status" className={`text-sm ${message.ok ? "text-green-700" : "text-red-700"}`}>{message.text}</p>
+          <p role="status" className={`text-sm ${message.ok ? "text-green-700" : "text-clay-700"}`}>{message.text}</p>
         )}
       </div>
     </form>

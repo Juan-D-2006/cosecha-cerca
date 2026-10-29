@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/client";
 import { createClient } from "@/lib/supabase/client";
 import { inputCls, labelCls, primaryBtn } from "@/components/ui";
 import type { BuyerType, UserRole } from "@/types/domain";
+import { Store, Tractor, type LucideIcon } from "lucide-react";
 
 const BUYER_TYPES: BuyerType[] = ["market", "restaurant", "community_kitchen", "other"];
 
@@ -50,27 +51,30 @@ export function RegisterForm() {
     }
   }
 
-  const roleOption = (value: UserRole, title: string, hint: string) => (
+  const roleOption = (value: UserRole, title: string, hint: string, Icon: LucideIcon) => (
     <label
-      className={`flex-1 cursor-pointer rounded-md border p-3 text-sm ${
-        role === value ? "border-green-700 bg-green-50" : "border-stone-300"
+      className={`flex-1 cursor-pointer rounded-2xl border-2 p-3.5 text-sm transition-[border-color,background-color,transform] duration-150 active:scale-[0.98] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-clay-500 ${
+        role === value ? "border-green-700 bg-green-50" : "border-stone-200 bg-white hover:border-stone-300"
       }`}
     >
       <input type="radio" name="role" value={value} checked={role === value} onChange={() => setRole(value)} className="sr-only" />
-      <span className="block font-medium">{title}</span>
+      <span className={`mb-2 grid h-9 w-9 place-items-center rounded-full ${role === value ? "bg-green-700 text-stone-50" : "bg-stone-100 text-stone-700"}`}>
+        <Icon className="h-5 w-5" aria-hidden />
+      </span>
+      <span className="block font-semibold text-stone-900">{title}</span>
       <span className="text-stone-600">{hint}</span>
     </label>
   );
 
   return (
     <form onSubmit={onSubmit} className="w-full max-w-md space-y-4">
-      <h1 className="text-xl font-semibold">{a.registerTitle}</h1>
+      <h1 className="text-3xl font-semibold text-stone-900">{a.registerTitle}</h1>
 
       <fieldset>
-        <legend className="mb-2 text-sm">{a.iAm}</legend>
+        <legend className="mb-2 text-sm font-medium text-stone-800">{a.iAm}</legend>
         <div className="flex gap-3">
-          {roleOption("farmer", a.farmer, a.farmerHint)}
-          {roleOption("buyer", a.buyer, a.buyerHint)}
+          {roleOption("farmer", a.farmer, a.farmerHint, Tractor)}
+          {roleOption("buyer", a.buyer, a.buyerHint, Store)}
         </div>
       </fieldset>
 
@@ -108,11 +112,11 @@ export function RegisterForm() {
       </label>
 
       {message && (
-        <p role="status" className={`text-sm ${message.ok ? "text-green-700" : "text-red-700"}`}>{message.text}</p>
+        <p role="status" className={`rounded-xl px-3 py-2 text-sm ${message.ok ? "bg-green-50 text-green-800" : "bg-clay-50 text-clay-700"}`}>{message.text}</p>
       )}
       <button disabled={pending} className={`${primaryBtn} w-full`}>{a.submitRegister}</button>
       <p className="text-center text-sm text-stone-600">
-        {a.haveAccount} <Link href="/login" className="text-green-800 underline">{dict.common.login}</Link>
+        {a.haveAccount} <Link href="/login" className="font-semibold text-clay-600 underline">{dict.common.login}</Link>
       </p>
     </form>
   );

@@ -18,3 +18,6 @@ const DEFAULT_IMAGE = unsplash("photo-1690934164598-99267828e900");
 
 export const listingImage = (imageUrl: string | null, categorySlug: string | null) =>
   imageUrl || (categorySlug && CATEGORY_IMAGES[categorySlug]) || DEFAULT_IMAGE;
+
+/** Portada del catálogo: puesto de mercado de agricultores */
+export const MARKET_IMAGE = unsplash("photo-1747258703852-5d2c2490d5a8", 1600);
