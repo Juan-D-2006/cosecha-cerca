@@ -9,6 +9,7 @@ import { ListingForm } from "@/components/panel/ListingForm";
 import { ListingStatusButton } from "@/components/panel/ListingStatusButton";
 import { OrdersList } from "@/components/orders/OrdersList";
 import type { ListingStatus, UnitType } from "@/types/domain";
+import { listingImage } from "@/lib/images";
 
 interface MyListing {
   id: string;
@@ -20,6 +21,8 @@ interface MyListing {
   status: ListingStatus;
   available_until: string;
   is_surplus: boolean;
+  image_url: string | null;
+  categories: { slug: string } | null;
 }
 
 export default async function PanelPage() {
@@ -35,7 +38,7 @@ export default async function PanelPage() {
     supabase.from("categories").select("id, slug, name").order("id"),
     supabase
       .from("listings")
-      .select("id, title, unit, price_per_unit, quantity_total, quantity_available, status, available_until, is_surplus")
+      .select("id, title, unit, price_per_unit, quantity_total, quantity_available, status, available_until, is_surplus, image_url, categories(slug)")
       .eq("farmer_id", user.id)
       .order("created_at", { ascending: false })
       .limit(100),
@@ -43,7 +46,7 @@ export default async function PanelPage() {
   ]);
 
   const locations = locationsRes.data ?? [];
-  const listings = (listingsRes.data ?? []) as MyListing[];
+  const listings = (listingsRes.data ?? []) as unknown as MyListing[];
 
   return (
     <div className="space-y-8">
@@ -73,6 +76,12 @@ export default async function PanelPage() {
           <ul className="divide-y divide-stone-200 rounded-lg border border-stone-200 bg-white">
             {listings.map((l) => (
               <li key={l.id} className="flex flex-wrap items-center gap-3 p-3 text-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={listingImage(l.image_url, l.categories?.slug ?? null)}
+                  alt=""
+                  className="h-14 w-20 rounded-md object-cover"
+                />
                 <div className="min-w-40 flex-1">
                   <p className="font-medium">
                     {l.title}

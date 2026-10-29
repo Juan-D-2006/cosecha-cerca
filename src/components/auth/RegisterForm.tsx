@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/i18n/client";
 import { createClient } from "@/lib/supabase/client";
-import { cardCls, inputCls, labelCls, primaryBtn } from "@/components/ui";
+import { inputCls, labelCls, primaryBtn } from "@/components/ui";
 import type { BuyerType, UserRole } from "@/types/domain";
 
 const BUYER_TYPES: BuyerType[] = ["market", "restaurant", "community_kitchen", "other"];
@@ -63,7 +63,7 @@ export function RegisterForm() {
   );
 
   return (
-    <form onSubmit={onSubmit} className={`${cardCls} mx-auto max-w-md space-y-4`}>
+    <form onSubmit={onSubmit} className="w-full max-w-md space-y-4">
       <h1 className="text-xl font-semibold">{a.registerTitle}</h1>
 
       <fieldset>

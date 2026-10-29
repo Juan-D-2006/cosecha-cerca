@@ -68,6 +68,7 @@ const en: Dictionary = {
     haveAccount: "Already have an account?",
     invalidCredentials: "Wrong email or password.",
     checkEmail: "We sent you an email to confirm your account.",
+    heroNote: "Lima farmers connected with nearby markets, restaurants and community kitchens.",
   },
   panel: {
     title: "Farmer dashboard",
@@ -94,6 +95,11 @@ const en: Dictionary = {
     harvestedAt: "Harvest date",
     location: "Pickup point",
     isSurplus: "This is surplus (highlighted to prevent waste)",
+    photo: "Product photo",
+    photoHint: "Required. Buyers will see it in the catalog.",
+    photoRequired: "Add a photo of the product.",
+    uploadingPhoto: "Uploading photo…",
+    changePhoto: "Change photo",
     publish: "Publish",
     published: "Published! It's now in the catalog.",
     myListings: "My listings",
@@ -134,6 +140,7 @@ const en: Dictionary = {
     forbidden: "You don't have permission to do this.",
     invalid: "Please check the form fields.",
     generic: "Something went wrong. Please try again.",
+    upload_failed: "Couldn't upload the photo. Try another image (JPG, PNG or WebP, max 5 MB).",
   },
 };
 

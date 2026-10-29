@@ -12,7 +12,7 @@ export async function SiteHeader({ dict }: { dict: Dictionary }) {
         <Link href="/" className="mr-auto text-base font-semibold text-green-800">
           {dict.common.appName}
         </Link>
-        <Link href="/catalogo" className="hover:underline">{dict.common.catalog}</Link>
+        {profile && <Link href="/catalogo" className="hover:underline">{dict.common.catalog}</Link>}
         {profile?.role === "farmer" && <Link href="/panel" className="hover:underline">{dict.common.myPanel}</Link>}
         {profile?.role === "buyer" && <Link href="/pedidos" className="hover:underline">{dict.common.myOrders}</Link>}
         {profile ? (

@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/i18n/client";
 import { apiFetch, errorText } from "@/lib/api";
 import { categoryName } from "@/lib/format";
 import { inputCls, labelCls, primaryBtn } from "@/components/ui";
 import { UNIT_TYPES } from "@/types/domain";
+import { createClient } from "@/lib/supabase/client";
+import { resizeImage } from "@/lib/resizeImage";
+
+const BUCKET = "product-images";
 
 interface Props {
   locations: { id: string; label: string }[];
@@ -26,13 +30,50 @@ export function ListingForm({ locations, categories }: Props) {
   const router = useRouter();
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
   const [pending, setPending] = useState(false);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  // Vista previa local de la foto elegida
+  useEffect(() => {
+    if (!photo) return setPreview(null);
+    const url = URL.createObjectURL(photo);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [photo]);
+
+  /** Sube la foto a Supabase Storage en la carpeta del agricultor y devuelve su URL pública */
+  async function uploadPhoto(file: File): Promise<string | null> {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return null;
+    const blob = await resizeImage(file);
+    const ext = blob.type === "image/png" ? "png" : blob.type === "image/webp" ? "webp" : "jpg";
+    const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
+    if (error) return null;
+    return supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formEl = e.currentTarget;
     const f = new FormData(formEl);
     const num = (k: string) => Number(f.get(k));
+    if (!photo) return setMessage({ ok: false, text: p.photoRequired });
     setPending(true);
+    setMessage(null);
+    setUploading(true);
+    const imageUrl = await uploadPhoto(photo);
+    setUploading(false);
+    if (!imageUrl) {
+      setPending(false);
+      return setMessage({ ok: false, text: dict.errors.upload_failed });
+    }
     const res = await apiFetch("/api/listings", "POST", {
       title: f.get("title"),
       description: f.get("description") || undefined,
@@ -45,10 +86,12 @@ export function ListingForm({ locations, categories }: Props) {
       harvestedAt: f.get("harvestedAt") || undefined,
       availableUntil: new Date(String(f.get("availableUntil"))).toISOString(),
       isSurplus: f.get("isSurplus") === "on",
+      imageUrl,
     });
     setPending(false);
     if (res.ok) {
       formEl.reset();
+      setPhoto(null);
       setMessage({ ok: true, text: p.published });
       router.refresh();
     } else {
@@ -58,6 +101,29 @@ export function ListingForm({ locations, categories }: Props) {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="sm:col-span-2 lg:col-span-3">
+        <span className={labelCls}>{p.photo}</span>
+        <label className="mt-1 flex cursor-pointer items-center gap-4 rounded-lg border-2 border-dashed border-stone-300 p-3 hover:border-green-700">
+          {preview ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={preview} alt="" className="h-24 w-32 rounded-md object-cover" />
+          ) : (
+            <span className="flex h-24 w-32 items-center justify-center rounded-md bg-green-50 text-3xl text-green-800" aria-hidden>
+              +
+            </span>
+          )}
+          <span className="text-sm">
+            <span className="font-medium text-green-800">{preview ? p.changePhoto : p.photo}</span>
+            <span className="block text-stone-600">{p.photoHint}</span>
+          </span>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/*"
+            className="sr-only"
+            onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
+          />
+        </label>
+      </div>
       <label className={`${labelCls} sm:col-span-2`}>
         {p.listingTitle}
         <input name="title" required minLength={3} maxLength={120} placeholder={p.listingTitlePlaceholder} className={inputCls} />
@@ -115,7 +181,7 @@ export function ListingForm({ locations, categories }: Props) {
         {p.isSurplus}
       </label>
       <div className="flex flex-wrap items-center gap-3 sm:col-span-2 lg:col-span-3">
-        <button disabled={pending} className={primaryBtn}>{pending ? dict.common.saving : p.publish}</button>
+        <button disabled={pending} className={primaryBtn}>{uploading ? p.uploadingPhoto : pending ? dict.common.saving : p.publish}</button>
         {message && (
           <p role="status" className={`text-sm ${message.ok ? "text-green-700" : "text-red-700"}`}>{message.text}</p>
         )}

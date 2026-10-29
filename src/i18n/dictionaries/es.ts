@@ -66,6 +66,7 @@ const es = {
     haveAccount: "¿Ya tienes cuenta?",
     invalidCredentials: "Correo o contraseña incorrectos.",
     checkEmail: "Te enviamos un correo para confirmar tu cuenta.",
+    heroNote: "Agricultores de Lima conectados con mercados, restaurantes y comedores cercanos.",
   },
   panel: {
     title: "Panel del agricultor",
@@ -92,6 +93,11 @@ const es = {
     harvestedAt: "Fecha de cosecha",
     location: "Punto de recojo",
     isSurplus: "Es excedente (se destaca para evitar desperdicio)",
+    photo: "Foto del producto",
+    photoHint: "Obligatoria. Los compradores la verán en el catálogo.",
+    photoRequired: "Agrega una foto del producto.",
+    uploadingPhoto: "Subiendo foto…",
+    changePhoto: "Cambiar foto",
     publish: "Publicar",
     published: "¡Publicado! Ya aparece en el catálogo.",
     myListings: "Mis publicaciones",
@@ -132,6 +138,7 @@ const es = {
     forbidden: "No tienes permiso para hacer esto.",
     invalid: "Revisa los datos del formulario.",
     generic: "Algo salió mal. Inténtalo de nuevo.",
+    upload_failed: "No se pudo subir la foto. Prueba con otra imagen (JPG, PNG o WebP, máx. 5 MB).",
   },
 };
 

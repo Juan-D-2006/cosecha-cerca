@@ -4,6 +4,7 @@ import { useI18n } from "@/i18n/client";
 import { categoryName, formatNumber, formatPrice, formatTimeLeft, t } from "@/lib/format";
 import type { NearbyListing } from "@/types/domain";
 import { ReserveForm } from "./ReserveForm";
+import { listingImage } from "@/lib/images";
 
 export function ListingCard({ listing }: { listing: NearbyListing }) {
   const { dict, locale } = useI18n();
@@ -11,14 +12,18 @@ export function ListingCard({ listing }: { listing: NearbyListing }) {
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-stone-200 bg-white">
-      {listing.image_url ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={listing.image_url} alt="" className="h-40 w-full object-cover" />
-      ) : (
-        <div className="flex h-28 items-center justify-center bg-green-50 text-sm font-medium text-green-800">
+      <div className="relative h-44 w-full bg-green-50">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={listingImage(listing.image_url, listing.category_slug)}
+          alt={listing.title}
+          loading="lazy"
+          className="h-full w-full object-cover"
+        />
+        <span className="absolute left-2 top-2 rounded bg-white/90 px-2 py-0.5 text-xs font-medium text-green-900">
           {categoryName(listing.category_slug, listing.category_name, dict)}
-        </div>
-      )}
+        </span>
+      </div>
 
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex flex-wrap gap-2 text-xs">

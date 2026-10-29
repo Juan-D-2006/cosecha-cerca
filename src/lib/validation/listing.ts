@@ -17,7 +17,7 @@ export const createListingSchema = z
     harvestedAt: z.string().date().optional(),
     availableUntil: z.string().datetime({ offset: true }),
     isSurplus: z.boolean().default(false),
-    imageUrl: z.string().url().optional(),
+    imageUrl: z.string().url(),
   })
   .refine((d) => d.minOrderQty <= d.quantityTotal, {
     path: ["minOrderQty"],

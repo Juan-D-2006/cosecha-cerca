@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       harvested_at: d.harvestedAt ?? null,
       available_until: d.availableUntil,
       is_surplus: d.isSurplus,
-      image_url: d.imageUrl ?? null,
+      image_url: d.imageUrl,
     })
     .select()
     .single();

@@ -68,6 +68,7 @@ const fr: Dictionary = {
     haveAccount: "Vous avez déjà un compte ?",
     invalidCredentials: "E-mail ou mot de passe incorrect.",
     checkEmail: "Nous vous avons envoyé un e-mail pour confirmer votre compte.",
+    heroNote: "Des producteurs de Lima reliés aux marchés, restaurants et cantines solidaires voisins.",
   },
   panel: {
     title: "Tableau de bord producteur",
@@ -94,6 +95,11 @@ const fr: Dictionary = {
     harvestedAt: "Date de récolte",
     location: "Point de retrait",
     isSurplus: "C'est un surplus (mis en avant pour éviter le gaspillage)",
+    photo: "Photo du produit",
+    photoHint: "Obligatoire. Les acheteurs la verront dans le catalogue.",
+    photoRequired: "Ajoutez une photo du produit.",
+    uploadingPhoto: "Envoi de la photo…",
+    changePhoto: "Changer la photo",
     publish: "Publier",
     published: "Publié ! Visible dans le catalogue.",
     myListings: "Mes annonces",
@@ -134,6 +140,7 @@ const fr: Dictionary = {
     forbidden: "Vous n'avez pas l'autorisation de faire cela.",
     invalid: "Vérifiez les champs du formulaire.",
     generic: "Une erreur s'est produite. Réessayez.",
+    upload_failed: "Impossible d'envoyer la photo. Essayez une autre image (JPG, PNG ou WebP, 5 Mo max).",
   },
 };
 

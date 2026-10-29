@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useI18n } from "@/i18n/client";
 import { createClient } from "@/lib/supabase/client";
-import { cardCls, inputCls, labelCls, primaryBtn } from "@/components/ui";
+import { inputCls, labelCls, primaryBtn } from "@/components/ui";
 
 export function LoginForm() {
   const { dict } = useI18n();
@@ -35,7 +35,7 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className={`${cardCls} mx-auto max-w-sm space-y-4`}>
+    <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4">
       <h1 className="text-xl font-semibold">{a.loginTitle}</h1>
       <label className={labelCls}>
         {a.email}
